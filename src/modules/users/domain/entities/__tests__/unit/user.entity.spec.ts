@@ -20,4 +20,27 @@ describe('UserEntity unit tests', () => {
     expect(userEntity.props.password).toEqual(props.password);
     expect(userEntity.props.createdAt).toBeInstanceOf(Date);
   });
+
+  it('Getter of name field', () => {
+    expect(userEntity.name).toBeDefined();
+    expect(userEntity.name).toEqual(props.name);
+    expect(typeof userEntity.name).toBe('string');
+  });
+
+  it('Getter of email field', () => {
+    expect(userEntity.email).toBeDefined();
+    expect(userEntity.email).toEqual(props.email);
+    expect(typeof userEntity.email).toBe('string');
+  });
+
+  it('Getter of password field', () => {
+    expect(userEntity.password).toBeDefined();
+    expect(userEntity.password).toEqual(props.password);
+    expect(typeof userEntity.password).toBe('string');
+  });
+
+  it('Getter of password field', () => {
+    expect(userEntity.createdAt).toBeDefined();
+    expect(userEntity.createdAt).toBeInstanceOf(Date);
+  });
 });
