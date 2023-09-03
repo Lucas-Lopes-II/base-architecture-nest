@@ -39,9 +39,13 @@ $ npm run test:cov
 ## 👨‍💻Technologies used
 
 ✔ Nest
+
 ✔ Node
+
 ✔ Express
+
 ✔ Jest
+
 ✔ TypeScript
 
 ---
