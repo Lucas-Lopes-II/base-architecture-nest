@@ -43,4 +43,5 @@ lerna-debug.log*
 .env
 .env.development
 .env.test
+.env.prod
 tsconfig.tsbuildinfo
