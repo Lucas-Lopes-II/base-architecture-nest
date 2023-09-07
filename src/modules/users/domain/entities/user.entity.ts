@@ -8,8 +8,16 @@ export type UserProps = {
 };
 
 export class UserEntity extends Entity<UserProps> {
-  constructor(public readonly props: UserProps, id?: string) {
+  constructor(public props: UserProps, id?: string) {
     super(props, id);
+  }
+
+  public update(props: UserProps): void {
+    this.seProps(props);
+  }
+
+  private seProps(props: UserProps): void {
+    this.props = props;
   }
 
   get name() {
@@ -22,6 +30,14 @@ export class UserEntity extends Entity<UserProps> {
 
   get password() {
     return this.props.password;
+  }
+
+  public updatePassword(value: string): void {
+    this.setPassword(value);
+  }
+
+  private setPassword(value: string) {
+    this.props.password = value;
   }
 
   get createdAt() {
