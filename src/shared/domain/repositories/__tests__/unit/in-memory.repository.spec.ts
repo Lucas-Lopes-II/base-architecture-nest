@@ -1,5 +1,6 @@
 import { Entity } from '../../../entities/entity';
 import { InMemoryRepository } from '../../in-memory.repository';
+import { NotFoundError } from './../../../errors/not-found-error';
 
 type StubEntityProps = {
   name: string;
@@ -23,5 +24,18 @@ describe('InMemoryRepository unit tests', () => {
     expect(entity.toJSON()).toStrictEqual(
       stubInMemoryRepository.items[0].toJSON(),
     );
+  });
+
+  it('Should throw error when entity not found', async () => {
+    await expect(stubInMemoryRepository.findById('fakeId')).rejects.toThrow(
+      new NotFoundError('Entity not found'),
+    );
+  });
+
+  it('Should find a entity by id', async () => {
+    const entity = new StubEntity({ name: 'test name', price: 50 });
+    await stubInMemoryRepository.insert(entity);
+    const result = await stubInMemoryRepository.findById(entity._id);
+    expect(entity.toJSON()).toStrictEqual(result.toJSON());
   });
 });
