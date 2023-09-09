@@ -44,6 +44,29 @@ describe('InMemoryRepository unit tests', () => {
     const entity = new StubEntity({ name: 'test name', price: 50 });
     await stubInMemoryRepository.insert(entity);
     const result = await stubInMemoryRepository.findAll();
+
     expect([entity]).toStrictEqual(result);
+  });
+
+  it('Should throw error on update when entity not found', async () => {
+    const entity = new StubEntity({ name: 'test name', price: 50 });
+
+    await expect(stubInMemoryRepository.update(entity)).rejects.toThrow(
+      new NotFoundError('Entity not found'),
+    );
+  });
+
+  it('Should update an entity', async () => {
+    const entity = new StubEntity({ name: 'test name', price: 50 });
+    await stubInMemoryRepository.insert(entity);
+    const entityUpdated = new StubEntity(
+      { name: 'updated', price: 10 },
+      entity._id,
+    );
+    await stubInMemoryRepository.update(entityUpdated);
+
+    expect(entityUpdated.toJSON()).toStrictEqual(
+      stubInMemoryRepository.items[0].toJSON(),
+    );
   });
 });
