@@ -69,4 +69,17 @@ describe('InMemoryRepository unit tests', () => {
       stubInMemoryRepository.items[0].toJSON(),
     );
   });
+
+  it('Should throw error when entity not found', async () => {
+    await expect(stubInMemoryRepository.delete('fakeId')).rejects.toThrow(
+      new NotFoundError('Entity not found'),
+    );
+  });
+
+  it('Should delete an entity', async () => {
+    const entity = new StubEntity({ name: 'test name', price: 50 });
+    await stubInMemoryRepository.insert(entity);
+    await stubInMemoryRepository.delete(entity._id);
+    expect(stubInMemoryRepository.items).toHaveLength(0);
+  });
 });
