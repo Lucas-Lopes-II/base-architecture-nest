@@ -1,7 +1,8 @@
 import { UserEntity } from '../entities/user.entity';
-import { IRepository } from './../../../../shared/domain/repositories/repository.interface';
+import { ISearchableRepository } from './../../../../shared/domain/repositories/searchable-repository.interface';
 
-export interface UserRepository extends IRepository<UserEntity> {
+export interface UserRepository
+  extends ISearchableRepository<UserEntity, any, any> {
   findByEmail(email: string): Promise<UserEntity>;
   emailExists(email: string): Promise<void>;
 }
