@@ -1,3 +1,7 @@
+import {
+  SearchParams,
+  SearchResult,
+} from './../../searchable-repository.interface';
 import { Entity } from '../../../entities/entity';
 import { InMemorySearchableRepository } from '../../in-memory-searchable.repository';
 
@@ -26,17 +30,17 @@ class StubInMemorySearchableRepository extends InMemorySearchableRepository<Stub
 }
 
 describe('InMemoryRepository unit tests', () => {
-  let StubInMemorySearchableRepo: StubInMemorySearchableRepository;
+  let stubInMemorySearchableRepo: StubInMemorySearchableRepository;
 
   beforeEach(() => {
-    StubInMemorySearchableRepo = new StubInMemorySearchableRepository();
+    stubInMemorySearchableRepo = new StubInMemorySearchableRepository();
   });
 
   describe('applyFilter method', () => {
     it('should not filter items when filter param is null', async () => {
       const items = [new StubEntity({ name: 'name value', price: 50 })];
       const spyFilterMethod = jest.spyOn(items, 'filter');
-      const itemsFiltered = await StubInMemorySearchableRepo['applyFilter'](
+      const itemsFiltered = await stubInMemorySearchableRepo['applyFilter'](
         items,
         null,
       );
@@ -51,21 +55,21 @@ describe('InMemoryRepository unit tests', () => {
         new StubEntity({ name: 'fake', price: 50 }),
       ];
       const spyFilterMethod = jest.spyOn(items, 'filter');
-      let itemsFiltered = await StubInMemorySearchableRepo['applyFilter'](
+      let itemsFiltered = await stubInMemorySearchableRepo['applyFilter'](
         items,
         'TEST',
       );
       expect(itemsFiltered).toStrictEqual([items[0], items[1]]);
       expect(spyFilterMethod).toHaveBeenCalledTimes(1);
 
-      itemsFiltered = await StubInMemorySearchableRepo['applyFilter'](
+      itemsFiltered = await stubInMemorySearchableRepo['applyFilter'](
         items,
         'test',
       );
       expect(itemsFiltered).toStrictEqual([items[0], items[1]]);
       expect(spyFilterMethod).toHaveBeenCalledTimes(2);
 
-      itemsFiltered = await StubInMemorySearchableRepo['applyFilter'](
+      itemsFiltered = await stubInMemorySearchableRepo['applyFilter'](
         items,
         'no-filter',
       );
@@ -81,14 +85,14 @@ describe('InMemoryRepository unit tests', () => {
         new StubEntity({ name: 'a', price: 50 }),
       ];
 
-      let itemsSorted = await StubInMemorySearchableRepo['applySort'](
+      let itemsSorted = await stubInMemorySearchableRepo['applySort'](
         items,
         null,
         null,
       );
       expect(itemsSorted).toStrictEqual(items);
 
-      itemsSorted = await StubInMemorySearchableRepo['applySort'](
+      itemsSorted = await stubInMemorySearchableRepo['applySort'](
         items,
         'price',
         'asc',
@@ -103,14 +107,14 @@ describe('InMemoryRepository unit tests', () => {
         new StubEntity({ name: 'c', price: 50 }),
       ];
 
-      let itemsSorted = await StubInMemorySearchableRepo['applySort'](
+      let itemsSorted = await stubInMemorySearchableRepo['applySort'](
         items,
         'name',
         'asc',
       );
       expect(itemsSorted).toStrictEqual([items[1], items[0], items[2]]);
 
-      itemsSorted = await StubInMemorySearchableRepo['applySort'](
+      itemsSorted = await stubInMemorySearchableRepo['applySort'](
         items,
         'name',
         'desc',
@@ -129,28 +133,28 @@ describe('InMemoryRepository unit tests', () => {
         new StubEntity({ name: 'e', price: 50 }),
       ];
 
-      let itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+      let itemsPaginated = await stubInMemorySearchableRepo['applyPaginate'](
         items,
         1,
         2,
       );
       expect(itemsPaginated).toStrictEqual([items[0], items[1]]);
 
-      itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+      itemsPaginated = await stubInMemorySearchableRepo['applyPaginate'](
         items,
         2,
         2,
       );
       expect(itemsPaginated).toStrictEqual([items[2], items[3]]);
 
-      itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+      itemsPaginated = await stubInMemorySearchableRepo['applyPaginate'](
         items,
         3,
         2,
       );
       expect(itemsPaginated).toStrictEqual([items[4]]);
 
-      itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+      itemsPaginated = await stubInMemorySearchableRepo['applyPaginate'](
         items,
         4,
         2,
@@ -159,5 +163,215 @@ describe('InMemoryRepository unit tests', () => {
     });
   });
 
-  // describe('search method', () => {});
+  describe('search method', () => {
+    it('should apply only pagination when the search params are null', async () => {
+      const entity = new StubEntity({ name: 'test', price: 50 });
+      const items = Array(16).fill(entity);
+      stubInMemorySearchableRepo.items = items;
+
+      const params = await stubInMemorySearchableRepo.search(
+        new SearchParams(),
+      );
+
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: Array(15).fill(entity),
+          total: 16,
+          currentPage: 1,
+          perPage: 15,
+          sort: null,
+          sortDir: null,
+          filter: null,
+        }),
+      );
+    });
+
+    it('should apply paginate and filter', async () => {
+      const items = [
+        new StubEntity({ name: 'test', price: 50 }),
+        new StubEntity({ name: 'a', price: 50 }),
+        new StubEntity({ name: 'TEST', price: 50 }),
+        new StubEntity({ name: 'TeSt', price: 50 }),
+      ];
+      stubInMemorySearchableRepo.items = items;
+
+      let params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 1,
+          perPage: 2,
+          filter: 'TEST',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[0], items[2]],
+          total: 3,
+          currentPage: 1,
+          perPage: 2,
+          sort: null,
+          sortDir: null,
+          filter: 'TEST',
+        }),
+      );
+
+      params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 2,
+          perPage: 2,
+          filter: 'TEST',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[3]],
+          total: 3,
+          currentPage: 2,
+          perPage: 2,
+          sort: null,
+          sortDir: null,
+          filter: 'TEST',
+        }),
+      );
+    });
+
+    it('should apply paginate and sort', async () => {
+      const items = [
+        new StubEntity({ name: 'b', price: 50 }),
+        new StubEntity({ name: 'a', price: 50 }),
+        new StubEntity({ name: 'd', price: 50 }),
+        new StubEntity({ name: 'e', price: 50 }),
+        new StubEntity({ name: 'c', price: 50 }),
+      ];
+      stubInMemorySearchableRepo.items = items;
+
+      let params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 1,
+          perPage: 2,
+          sort: 'name',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[3], items[2]],
+          total: 5,
+          currentPage: 1,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'desc',
+          filter: null,
+        }),
+      );
+
+      params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 2,
+          perPage: 2,
+          sort: 'name',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[4], items[0]],
+          total: 5,
+          currentPage: 2,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'desc',
+          filter: null,
+        }),
+      );
+
+      params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 1,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'asc',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[1], items[0]],
+          total: 5,
+          currentPage: 1,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'asc',
+          filter: null,
+        }),
+      );
+
+      params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 3,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'asc',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[3]],
+          total: 5,
+          currentPage: 3,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'asc',
+          filter: null,
+        }),
+      );
+    });
+
+    it('should search using paginate, sort and filter', async () => {
+      const items = [
+        new StubEntity({ name: 'test', price: 50 }),
+        new StubEntity({ name: 'a', price: 50 }),
+        new StubEntity({ name: 'TEST', price: 50 }),
+        new StubEntity({ name: 'e', price: 50 }),
+        new StubEntity({ name: 'TeSt', price: 50 }),
+      ];
+      stubInMemorySearchableRepo.items = items;
+
+      let params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 1,
+          perPage: 2,
+          sort: 'name',
+          filter: 'TEST',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[0], items[4]],
+          total: 3,
+          currentPage: 1,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'desc',
+          filter: 'TEST',
+        }),
+      );
+
+      params = await stubInMemorySearchableRepo.search(
+        new SearchParams({
+          page: 2,
+          perPage: 2,
+          sort: 'name',
+          filter: 'TEST',
+        }),
+      );
+      expect(params).toStrictEqual(
+        new SearchResult({
+          items: [items[2]],
+          total: 3,
+          currentPage: 2,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'desc',
+          filter: 'TEST',
+        }),
+      );
+    });
+  });
 });
