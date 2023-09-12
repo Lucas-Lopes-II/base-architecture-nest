@@ -33,7 +33,7 @@ describe('InMemoryRepository unit tests', () => {
   });
 
   describe('applyFilter method', () => {
-    it('should no filter items when filter param is null', async () => {
+    it('should not filter items when filter param is null', async () => {
       const items = [new StubEntity({ name: 'name value', price: 50 })];
       const spyFilterMethod = jest.spyOn(items, 'filter');
       const itemsFiltered = await StubInMemorySearchableRepo['applyFilter'](
@@ -119,7 +119,45 @@ describe('InMemoryRepository unit tests', () => {
     });
   });
 
-  // describe('applyPaginate method', () => {});
+  describe('applyPaginate method', () => {
+    it('should paginate items', async () => {
+      const items = [
+        new StubEntity({ name: 'a', price: 50 }),
+        new StubEntity({ name: 'b', price: 50 }),
+        new StubEntity({ name: 'c', price: 50 }),
+        new StubEntity({ name: 'd', price: 50 }),
+        new StubEntity({ name: 'e', price: 50 }),
+      ];
+
+      let itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+        items,
+        1,
+        2,
+      );
+      expect(itemsPaginated).toStrictEqual([items[0], items[1]]);
+
+      itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+        items,
+        2,
+        2,
+      );
+      expect(itemsPaginated).toStrictEqual([items[2], items[3]]);
+
+      itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+        items,
+        3,
+        2,
+      );
+      expect(itemsPaginated).toStrictEqual([items[4]]);
+
+      itemsPaginated = await StubInMemorySearchableRepo['applyPaginate'](
+        items,
+        4,
+        2,
+      );
+      expect(itemsPaginated).toStrictEqual([]);
+    });
+  });
 
   // describe('search method', () => {});
 });
