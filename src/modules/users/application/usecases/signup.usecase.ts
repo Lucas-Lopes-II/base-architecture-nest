@@ -1,6 +1,8 @@
 import { UserEntity } from './../../domain/entities/user.entity';
 import { UserRepository } from '../../domain/repositories/user.repository';
+import { DefaoultUseCase } from './../../../../shared/aplication/usecases/use-case';
 import { BadRequestError } from '../../../../shared/domain/errors/bad-request-error';
+import { ICryptography } from './../../../../shared/aplication/crypto/interfaces/cryptography.interface';
 
 export namespace SignupUseCase {
   export type Input = {
@@ -17,8 +19,11 @@ export namespace SignupUseCase {
     createdAt: Date;
   };
 
-  export class UseCase {
-    constructor(private userRepository: UserRepository.Repository) {}
+  export class UseCase implements DefaoultUseCase<Input, Output> {
+    constructor(
+      private readonly userRepository: UserRepository.Repository,
+      private readonly cryptography: ICryptography,
+    ) {}
 
     async execute(input: Input): Promise<Output> {
       const { email, name, password } = input;
@@ -32,6 +37,7 @@ export namespace SignupUseCase {
       const entity = new UserEntity(input);
 
       await this.userRepository.insert(entity);
+
       return entity.toJSON();
     }
   }
