@@ -1,9 +1,9 @@
-import { UserEntity } from '../../../../domain/entities/user.entity';
-import { UserRepository } from '../../../../domain/repositories/user.repository';
-import { ConflictError } from '../../../../../../shared/domain/errors/conflict-error';
-import { NotFoundError } from '../../../../../../shared/domain/errors/not-found-error';
-import { SortDirection } from './../../../../../../shared/domain/repositories/searchable-repository.interface';
-import { InMemorySearchableRepository } from '../../../../../../shared/domain/repositories/in-memory-searchable.repository';
+import { UserEntity } from '../../../../domain/entities';
+import { UserRepository } from '../../../../domain/repositories';
+import { ConflictError } from '../../../../../../shared/domain/errors';
+import { NotFoundError } from '../../../../../../shared/domain/errors';
+import { SortDirection } from './../../../../../../shared/domain/repositories';
+import { InMemorySearchableRepository } from '../../../../../../shared/domain/repositories';
 
 export class UserInMemoryRepository
   extends InMemorySearchableRepository<UserEntity>

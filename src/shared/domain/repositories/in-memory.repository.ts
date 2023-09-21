@@ -1,6 +1,6 @@
 import { Entity } from '../entities/entity';
 import { IRepository } from './repository.interface';
-import { NotFoundError } from './../errors/not-found-error';
+import { NotFoundError } from './../errors';
 
 export abstract class InMemoryRepository<E extends Entity>
   implements IRepository<E>

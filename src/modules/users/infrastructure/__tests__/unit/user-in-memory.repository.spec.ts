@@ -1,8 +1,8 @@
-import { UserEntity } from './../../../domain/entities/user.entity';
-import { ConflictError } from './../../../../../shared/domain/errors/conflict-error';
-import { NotFoundError } from './../../../../../shared/domain/errors/not-found-error';
+import { UserEntity } from './../../../domain/entities';
+import { ConflictError } from './../../../../../shared/domain/errors';
+import { NotFoundError } from './../../../../../shared/domain/errors';
 import { UserDataBuilder } from '../../../domain/entities/testing/helpers/user-data-builder';
-import { UserInMemoryRepository } from './../../database/repositories/in-memory/user-in-memory.repository';
+import { UserInMemoryRepository } from './../../database/repositories';
 
 describe('UserInMemoryRepository unit tests', () => {
   let userInMemoryRepository: UserInMemoryRepository;

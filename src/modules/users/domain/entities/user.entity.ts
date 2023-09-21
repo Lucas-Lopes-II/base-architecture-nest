@@ -1,6 +1,6 @@
-import { Entity } from '../../../../shared/domain/entities/entity';
-import { UserValidatorFactory } from './../validators/user.validator';
-import { EntityValidationError } from './../../../../shared/domain/errors/validation-error';
+import { Entity } from '../../../../shared/domain/entities';
+import { UserValidatorFactory } from './../validators';
+import { EntityValidationError } from './../../../../shared/domain/errors';
 
 export type UserProps = {
   name: string;

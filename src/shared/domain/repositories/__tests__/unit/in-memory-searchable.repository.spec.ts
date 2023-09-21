@@ -2,7 +2,7 @@ import {
   SearchParams,
   SearchResult,
 } from './../../searchable-repository.interface';
-import { Entity } from '../../../entities/entity';
+import { Entity } from '../../../entities';
 import { InMemorySearchableRepository } from '../../in-memory-searchable.repository';
 
 type StubEntityProps = {

@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 
-import { Bcrypt } from './bcrypt/bcrypt';
-import { CRYPTOGRAPHY } from './interfaces/cryptography.interface';
+import { Bcrypt } from '../../aplication/crypto';
+import { CRYPTOGRAPHY } from '../../aplication/crypto';
 
 @Global()
 @Module({

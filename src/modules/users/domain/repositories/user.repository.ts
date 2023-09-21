@@ -1,9 +1,9 @@
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity } from '../entities';
 import {
   SearchParams as DefaultSearchParams,
   SearchResult as DefaultSearchResult,
   ISearchableRepository,
-} from './../../../../shared/domain/repositories/searchable-repository.interface';
+} from './../../../../shared/domain/repositories';
 
 export namespace UserRepository {
   export type Filter = string;

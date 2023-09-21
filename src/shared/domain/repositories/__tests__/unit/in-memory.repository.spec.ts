@@ -1,4 +1,4 @@
-import { Entity } from '../../../entities/entity';
+import { Entity } from '../../../entities';
 import { InMemoryRepository } from '../../in-memory.repository';
 import { NotFoundError } from './../../../errors/not-found-error';
 
