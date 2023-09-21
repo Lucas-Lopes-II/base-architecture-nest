@@ -1,8 +1,8 @@
 import { UserEntity } from './../../domain/entities';
 import { UserRepository } from '../../domain/repositories';
-import { DefaoultUseCase } from './../../../../shared/aplication/usecases';
 import { BadRequestError } from '../../../../shared/domain/errors';
-import { ICryptography } from './../../../../shared/aplication/crypto/interfaces/cryptography.interface';
+import { ICryptography } from './../../../../shared/aplication/providers';
+import { DefaoultUseCase } from './../../../../shared/aplication/usecases';
 
 export namespace SignupUseCase {
   export type Input = {
