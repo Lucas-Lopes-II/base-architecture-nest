@@ -14,6 +14,7 @@ export namespace GetUserUseCase {
 
     async execute(input: Input): Promise<Output> {
       const entity = await this.userRepository.findById(input.id);
+
       return entity.toJSON();
     }
   }
