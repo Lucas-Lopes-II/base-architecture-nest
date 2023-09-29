@@ -39,7 +39,6 @@ export namespace SignupUseCase {
       const entity = new UserEntity(
         Object.assign(input, { password: hashPassword }),
       );
-
       await this.userRepository.insert(entity);
 
       return entity.toJSON();

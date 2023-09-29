@@ -13,6 +13,7 @@ export class UserEntity extends Entity<UserProps> {
   constructor(public props: UserProps, id?: string) {
     UserEntity.validate(props);
     super(props, id);
+    this.props.createdAt = this.props.createdAt ?? new Date();
   }
 
   public update(props: UserProps): void {
