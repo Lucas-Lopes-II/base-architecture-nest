@@ -1,11 +1,11 @@
-import { SearchInput } from './../dtos/search-input';
+import { SearchInput } from './../dtos';
 import {
   PaginationOutput,
   PaginationOutputMapper,
-} from './../../../../shared/aplication/dtos/pagination-output';
-import { UserOutput, UserOutputMapper } from './../dtos/user-output';
-import { UserRepository } from '../../domain/repositories/user.repository';
-import { DefaultUseCase } from './../../../../shared/aplication/usecases/default-use-case';
+} from './../../../../shared/aplication/dtos';
+import { UserOutput, UserOutputMapper } from './../dtos';
+import { UserRepository } from '../../domain/repositories';
+import { DefaultUseCase } from './../../../../shared/aplication/usecases';
 
 export namespace ListUsersUseCase {
   export type Input = SearchInput;

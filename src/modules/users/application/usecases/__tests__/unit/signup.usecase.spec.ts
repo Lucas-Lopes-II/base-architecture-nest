@@ -1,10 +1,14 @@
-import { BadRequestError } from './../../../../../../shared/domain/errors/bad-request-error';
-import { ConflictError } from './../../../../../../shared/domain/errors/conflict-error';
-import { UserDataBuilder } from '../../../../domain/entities/testing/helpers/user-data-builder';
-import { Bcrypt } from './../../../../../../shared/aplication/providers/crypto/bcrypt/bcrypt.provider';
-import { UserInMemoryRepository } from './../../../../infrastructure/database/repositories/in-memory/user-in-memory.repository';
-import { ICryptography } from './../../../../../../shared/aplication/providers/crypto/interfaces/cryptography.interface';
+import {
+  ConflictError,
+  BadRequestError,
+} from './../../../../../../shared/domain/errors';
 import { SignupUseCase } from '../../signup.usecase';
+import {
+  ICryptography,
+  Bcrypt,
+} from './../../../../../../shared/aplication/providers';
+import { UserInMemoryRepository } from './../../../../infrastructure/database/repositories';
+import { UserDataBuilder } from '../../../../domain/entities/testing/helpers/user-data-builder';
 
 describe('SignupUseCase unit tests', () => {
   let signupUseCase: SignupUseCase.UseCase;

@@ -1,4 +1,4 @@
-import { UserOutput } from './../dtos/user-output';
+import { UserOutput } from './../dtos';
 import { UserEntity } from './../../domain/entities';
 import { UserRepository } from '../../domain/repositories';
 import { BadRequestError } from '../../../../shared/domain/errors';

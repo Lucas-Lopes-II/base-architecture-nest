@@ -1,8 +1,8 @@
 import { GetUserUseCase } from '../../getuser.usecase';
-import { UserEntity } from './../../../../domain/entities/user.entity';
-import { NotFoundError } from './../../../../../../shared/domain/errors/not-found-error';
+import { UserEntity } from './../../../../domain/entities';
+import { NotFoundError } from './../../../../../../shared/domain/errors';
+import { UserInMemoryRepository } from './../../../../infrastructure/database/repositories';
 import { UserDataBuilder } from '../../../../domain/entities/testing/helpers/user-data-builder';
-import { UserInMemoryRepository } from './../../../../infrastructure/database/repositories/in-memory/user-in-memory.repository';
 
 describe('GetUserUseCase unit tests', () => {
   let getUserUseCase: GetUserUseCase.UseCase;

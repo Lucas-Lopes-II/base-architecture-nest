@@ -1,6 +1,6 @@
-import { UserOutput } from './../dtos/user-output';
-import { UserRepository } from '../../domain/repositories/user.repository';
-import { DefaultUseCase } from './../../../../shared/aplication/usecases/default-use-case';
+import { UserOutput } from './../dtos';
+import { UserRepository } from '../../domain/repositories';
+import { DefaultUseCase } from './../../../../shared/aplication/usecases';
 
 export namespace GetUserUseCase {
   export type Input = {
