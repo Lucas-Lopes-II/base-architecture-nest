@@ -1,3 +1,4 @@
+import { UserOutput } from './../dtos/user-output';
 import { UserRepository } from '../../domain/repositories/user.repository';
 
 export namespace GetUserUseCase {
@@ -5,13 +6,7 @@ export namespace GetUserUseCase {
     id: string;
   };
 
-  export type Output = {
-    id: string;
-    name: string;
-    email: string;
-    password: string;
-    createdAt: Date;
-  };
+  export type Output = UserOutput;
 
   export class UseCase {
     constructor(private userRepository: UserRepository.Repository) {}

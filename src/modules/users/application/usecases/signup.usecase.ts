@@ -1,3 +1,4 @@
+import { UserOutput } from './../dtos/user-output';
 import { UserEntity } from './../../domain/entities';
 import { UserRepository } from '../../domain/repositories';
 import { BadRequestError } from '../../../../shared/domain/errors';
@@ -11,13 +12,7 @@ export namespace SignupUseCase {
     password: string;
   };
 
-  export type Output = {
-    id: string;
-    name: string;
-    email: string;
-    password: string;
-    createdAt: Date;
-  };
+  export type Output = UserOutput;
 
   export class UseCase implements DefaoultUseCase<Input, Output> {
     constructor(
