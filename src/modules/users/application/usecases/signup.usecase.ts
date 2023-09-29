@@ -3,7 +3,7 @@ import { UserEntity } from './../../domain/entities';
 import { UserRepository } from '../../domain/repositories';
 import { BadRequestError } from '../../../../shared/domain/errors';
 import { ICryptography } from './../../../../shared/aplication/providers';
-import { DefaoultUseCase } from './../../../../shared/aplication/usecases';
+import { DefaultUseCase } from './../../../../shared/aplication/usecases';
 
 export namespace SignupUseCase {
   export type Input = {
@@ -14,7 +14,7 @@ export namespace SignupUseCase {
 
   export type Output = UserOutput;
 
-  export class UseCase implements DefaoultUseCase<Input, Output> {
+  export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(
       private readonly userRepository: UserRepository.Repository,
       private readonly cryptography: ICryptography,
