@@ -1,8 +1,8 @@
 import { UserRepository } from '../../domain/repositories';
-import { DefaultUseCase } from './../../../../shared/aplication/usecases/default-use-case';
 import { UserOutput, UserOutputMapper } from '../dtos/user-output';
+import { ICryptography } from './../../../../shared/aplication/providers';
+import { DefaultUseCase } from './../../../../shared/aplication/usecases/default-use-case';
 import { InvalidPasswordError } from './../../../../shared/domain/errors/invalid-password-error';
-import { ICryptography } from './../../../../shared/aplication/providers/crypto/interfaces/cryptography.interface';
 
 export namespace UpdatePasswordUseCase {
   export type Input = {
