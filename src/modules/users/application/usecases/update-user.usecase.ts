@@ -16,7 +16,7 @@ export namespace UpdateUserUseCase {
     constructor(private userRepository: UserRepository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      if (!input.name || !input.email) {
+      if (!input.name && !input.email) {
         throw new BadRequestError('Data not provided');
       }
 
