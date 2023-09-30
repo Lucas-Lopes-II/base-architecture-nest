@@ -29,7 +29,7 @@ export namespace SignupUseCase {
 
       await this.userRepository.emailExists(email);
 
-      const hashPassword = await this.cryptography.hash(password, 10);
+      const hashPassword = await this.cryptography.hash(password);
 
       const entity = new UserEntity(
         Object.assign(input, { password: hashPassword }),
