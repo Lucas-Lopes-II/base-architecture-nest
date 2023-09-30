@@ -1,4 +1,4 @@
-import { UserOutput } from './../dtos';
+import { UserOutput, UserOutputMapper } from './../dtos';
 import { UserEntity } from './../../domain/entities';
 import { UserRepository } from '../../domain/repositories';
 import { BadRequestError } from '../../../../shared/domain/errors';
@@ -36,7 +36,7 @@ export namespace SignupUseCase {
       );
       await this.userRepository.insert(entity);
 
-      return entity.toJSON();
+      return UserOutputMapper.toOutput(entity);
     }
   }
 }

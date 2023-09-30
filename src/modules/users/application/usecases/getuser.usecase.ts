@@ -1,4 +1,4 @@
-import { UserOutput } from './../dtos';
+import { UserOutput, UserOutputMapper } from './../dtos';
 import { UserRepository } from '../../domain/repositories';
 import { DefaultUseCase } from './../../../../shared/aplication/usecases';
 
@@ -15,7 +15,7 @@ export namespace GetUserUseCase {
     async execute(input: Input): Promise<Output> {
       const entity = await this.userRepository.findById(input.id);
 
-      return entity.toJSON();
+      return UserOutputMapper.toOutput(entity);
     }
   }
 }

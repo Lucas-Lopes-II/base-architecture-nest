@@ -16,8 +16,11 @@ export class UserEntity extends Entity<UserProps> {
     this.props.createdAt = this.props.createdAt ?? new Date();
   }
 
-  public update(props: UserProps): void {
-    this.seProps(props);
+  public update(props: Partial<UserProps>): void {
+    this.seProps({
+      ...this.props,
+      ...props,
+    });
   }
 
   private seProps(props: UserProps): void {
