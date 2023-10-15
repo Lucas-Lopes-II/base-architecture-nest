@@ -5,13 +5,13 @@ import {
   ISearchableRepository,
 } from './../../../../shared/domain/repositories';
 
+export const USER_REPOSITORY = Symbol('UserRepository');
 export namespace UserRepository {
   export type Filter = string;
 
   export class SearchParams extends DefaultSearchParams<Filter> {}
 
   export class SearchResult extends DefaultSearchResult<UserEntity, Filter> {}
-
   export interface Repository
     extends ISearchableRepository<
       UserEntity,
