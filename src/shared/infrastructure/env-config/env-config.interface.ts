@@ -1,4 +1,4 @@
-export interface EnvConfig {
-  getAppPort(): number;
-  getNodeEnv(): string;
+export abstract class IEnvConfig {
+  abstract getAppPort(): number;
+  abstract getNodeEnv(): string;
 }

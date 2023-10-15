@@ -1,21 +1,15 @@
 import { Global, Module } from '@nestjs/common';
 
-import { Bcrypt } from './../../aplication/providers';
-import { CRYPTOGRAPHY } from './../../aplication/providers';
+import { Bcrypt, ICryptography } from './../../aplication/providers';
 
 @Global()
 @Module({
   providers: [
     {
-      provide: CRYPTOGRAPHY,
+      provide: ICryptography,
       useClass: Bcrypt,
     },
   ],
-  exports: [
-    {
-      provide: CRYPTOGRAPHY,
-      useClass: Bcrypt,
-    },
-  ],
+  exports: [ICryptography],
 })
 export class CryptoModule {}

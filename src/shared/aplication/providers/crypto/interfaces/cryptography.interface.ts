@@ -1,7 +1,5 @@
-export const CRYPTOGRAPHY = Symbol('ICryptography');
+export abstract class ICryptography {
+  abstract hash(data: string | Buffer): Promise<string>;
 
-export interface ICryptography {
-  hash(data: string | Buffer): Promise<string>;
-
-  compare(data: string | Buffer, encrypted: string): Promise<boolean>;
+  abstract compare(data: string | Buffer, encrypted: string): Promise<boolean>;
 }
