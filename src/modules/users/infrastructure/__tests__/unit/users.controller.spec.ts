@@ -5,6 +5,7 @@ import {
   UpdateUserDto,
 } from '../../dtos';
 import {
+  GetUserUseCase,
   SigninUseCase,
   SignupUseCase,
   UpdatePasswordUseCase,
@@ -111,6 +112,19 @@ describe('UsersController unit tests', () => {
     const result = await usersController.remove(id);
     expect(output).toStrictEqual(result);
     expect(mockDeleteUserUseCase.execute).toHaveBeenCalledWith({
+      id,
+    });
+  });
+
+  it('should gets a user', async () => {
+    const output: GetUserUseCase.Output = props;
+    const mockGetUserUseCase = {
+      execute: jest.fn().mockReturnValue(Promise.resolve(output)),
+    };
+    usersController['getUserUseCase'] = mockGetUserUseCase as any;
+    const result = await usersController.findOne(id);
+    expect(output).toStrictEqual(result);
+    expect(mockGetUserUseCase.execute).toHaveBeenCalledWith({
       id,
     });
   });
