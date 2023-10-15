@@ -47,7 +47,6 @@ import { UpdatePasswordUseCase } from '../application/usecases/update-password.u
       },
       inject: [USER_REPOSITORY],
     },
-
     {
       provide: ListUsersUseCase.UseCase,
       useFactory: (userRepository: UserRepository.Repository) => {

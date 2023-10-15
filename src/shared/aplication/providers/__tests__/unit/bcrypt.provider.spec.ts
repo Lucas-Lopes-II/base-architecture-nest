@@ -9,20 +9,20 @@ describe('Bcrypt unit tests', () => {
 
   it('Should return encrypted password', async () => {
     const password = 'TestPassword123';
-    const hash = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password);
     expect(hash).toBeDefined();
   });
 
   it('Should return false on invalid password and hash comparison', async () => {
     const password = 'TestPassword123';
-    const hash = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password);
     const result = await bcrypt.compare('fake', hash);
     expect(result).toBeFalsy();
   });
 
   it('Should return true on valid password and hash comparison', async () => {
     const password = 'TestPassword123';
-    const hash = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password);
     const result = await bcrypt.compare(password, hash);
     expect(result).toBeTruthy();
   });
